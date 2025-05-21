@@ -1,6 +1,4 @@
-﻿using System;
-using ArribaEats.Models;
-using ArribaEats.Repositories;
+﻿using ArribaEats.Menus;
 using ArribaEats.Services;
 
 namespace ArribaEats
@@ -9,39 +7,38 @@ namespace ArribaEats
     {
         static void Main(string[] args)
         {
-            var userRepository = new UserRepository();
-            var registrationService = new RegistrationService(userRepository);
+            Console.WriteLine("Welcome to Arriba Eats!");
 
-            Console.WriteLine("Welcome to Arriba Eats Registration!");
-
-            Console.Write("Enter your name: ");
-            string name = Console.ReadLine();
-
-            Console.Write("Enter your age: ");
-            int age = int.Parse(Console.ReadLine());
-
-            Console.Write("Enter your email: ");
-            string email = Console.ReadLine();
-
-            Console.Write("Enter your mobile number: ");
-            string mobileNumber = Console.ReadLine();
-
-            Console.Write("Enter your password: ");
-            string password = Console.ReadLine();
-
-            Console.WriteLine("Select your role (Customer, Deliverer, Client): ");
-            string roleInput = Console.ReadLine();
-            UserRole role = Enum.Parse<UserRole>(roleInput, true);
-
-            bool isRegistered = registrationService.RegisterUser(name, age, email, mobileNumber, password, role);
-
-            if (isRegistered)
+            while (true)
             {
-                Console.WriteLine("Registration successful!");
-            }
-            else
-            {
-                Console.WriteLine("Registration failed. Email already registered.");
+                Console.WriteLine("\nPlease make a choice from the menu below:");
+                Console.WriteLine("1: Login as a registered user");
+                Console.WriteLine("2: Register as a new user");
+                Console.WriteLine("3: Exit");
+                Console.Write("Please enter a choice between 1 and 3: ");
+                var choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        // if (LoginMenu.Show())
+                        // {
+                        //     // Login successful, show respective main menu (not implemented yet)
+                        // }
+                        break;
+
+                    case "2":
+                        RegisterMenu.Run();
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Thank you for using Arriba Eats!");
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid choice.");
+                        break;
+                }
             }
         }
     }

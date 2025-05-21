@@ -12,3 +12,4 @@
 /Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.pdb
 /Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.genruntimeconfig.cache
 /Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ref/ArribaEats.dll
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.sourcelink.json
