@@ -15,7 +15,7 @@ namespace ArribaEats.Menus
                 Console.WriteLine("2: Deliverer");
                 Console.WriteLine("3: Client");
                 Console.WriteLine("4: Return to the previous menu");
-                Console.Write("Please enter a choice between 1 and 4: ");
+                Console.WriteLine("Please enter a choice between 1 and 4: ");
 
                 string choice = Console.ReadLine();
 
@@ -43,7 +43,7 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.Write("Please enter your name: ");
+                Console.WriteLine("Please enter your name: ");
                 string name = Console.ReadLine();
                 if (ValidationService.IsValidName(name))
                     return name;
@@ -55,7 +55,7 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.Write("Please enter your age (18-100): ");
+                Console.WriteLine("Please enter your age (18-100): ");
                 string input = Console.ReadLine();
                 if (ValidationService.IsValidAge(input, out int age))
                     return age;
@@ -67,7 +67,7 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.Write("Please enter your email address: ");
+                Console.WriteLine("Please enter your email address: ");
                 string email = Console.ReadLine();
                 if (!ValidationService.IsValidEmail(email))
                 {
@@ -88,7 +88,7 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.Write("Please enter your mobile phone number: ");
+                Console.WriteLine("Please enter your mobile phone number: ");
                 string phone = Console.ReadLine();
                 if (ValidationService.IsValidPhone(phone))
                     return phone;
@@ -105,7 +105,7 @@ namespace ArribaEats.Menus
                 Console.WriteLine("- contain a number");
                 Console.WriteLine("- contain a lowercase letter");
                 Console.WriteLine("- contain an uppercase letter");
-                Console.Write("Please enter a password: ");
+                Console.WriteLine("Please enter a password: ");
                 string password = Console.ReadLine();
 
                 if (!ValidationService.IsValidPassword(password))
@@ -114,7 +114,7 @@ namespace ArribaEats.Menus
                     continue;
                 }
 
-                Console.Write("Please confirm your password: ");
+                Console.WriteLine("Please confirm your password: ");
                 string confirmPassword = Console.ReadLine();
 
                 if (password != confirmPassword)
@@ -128,7 +128,6 @@ namespace ArribaEats.Menus
 
         private static void RegisterCustomer()
         {
-            Console.WriteLine("Registering as Customer:");
             string name = PromptValidName();
             int age = PromptValidAge();
             string email = PromptValidEmail();
@@ -138,7 +137,7 @@ namespace ArribaEats.Menus
             (int x, int y) location;
             while (true)
             {
-                Console.Write("Please enter your location (in the form of X,Y): ");
+                Console.WriteLine("Please enter your location (in the form of X,Y): ");
                 string input = Console.ReadLine();
                 if (ValidationService.IsValidLocation(input, out location))
                     break;
@@ -153,7 +152,6 @@ namespace ArribaEats.Menus
 
         private static void RegisterDeliverer()
         {
-            Console.WriteLine("Registering as Deliverer:");
             string name = PromptValidName();
             int age = PromptValidAge();
             string email = PromptValidEmail();
@@ -163,7 +161,7 @@ namespace ArribaEats.Menus
             string licencePlate;
             while (true)
             {
-                Console.Write("Please enter your licence plate (1-8 uppercase letters, numbers, spaces): ");
+                Console.WriteLine("Please enter your licence plate (1-8 uppercase letters, numbers, spaces): ");
                 licencePlate = Console.ReadLine();
                 if (ValidationService.IsValidLicencePlate(licencePlate))
                     break;
@@ -178,7 +176,6 @@ namespace ArribaEats.Menus
 
         private static void RegisterClient()
         {
-            Console.WriteLine("Registering as Client:");
             string name = PromptValidName();
             int age = PromptValidAge();
             string email = PromptValidEmail();
@@ -188,7 +185,7 @@ namespace ArribaEats.Menus
             string restaurantName;
             while (true)
             {
-                Console.Write("Please enter your restaurant's name: ");
+                Console.WriteLine("Please enter your restaurant's name: ");
                 restaurantName = Console.ReadLine();
                 if (ValidationService.IsValidRestaurantName(restaurantName))
                     break;
@@ -205,7 +202,7 @@ namespace ArribaEats.Menus
                 Console.WriteLine("4: Japanese");
                 Console.WriteLine("5: American");
                 Console.WriteLine("6: Australian");
-                Console.Write("Please enter a choice between 1 and 6: ");
+                Console.WriteLine("Please enter a choice between 1 and 6: ");
                 string choice = Console.ReadLine();
 
                 if (ValidationService.IsValidFoodStyle(choice, out int styleNum))
@@ -228,7 +225,7 @@ namespace ArribaEats.Menus
             (int x, int y) location;
             while (true)
             {
-                Console.Write("Please enter your location (in the form of X,Y): ");
+                Console.WriteLine("Please enter your location (in the form of X,Y): ");
                 string input = Console.ReadLine();
                 if (ValidationService.IsValidLocation(input, out location))
                     break;

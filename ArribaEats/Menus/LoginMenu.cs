@@ -10,11 +10,11 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.WriteLine("\nPlease make a choice from the menu below:");
+                Console.WriteLine("Please make a choice from the menu below:");
                 Console.WriteLine("1: Login as a registered user");
                 Console.WriteLine("2: Register as a new user");
                 Console.WriteLine("3: Exit");
-                Console.Write("Please enter a choice between 1 and 3: ");
+                Console.WriteLine("Please enter a choice between 1 and 3:");
                 var choice = Console.ReadLine();
 
                 switch (choice)
@@ -45,10 +45,10 @@ namespace ArribaEats.Menus
 
         private static bool Login()
         {
-            Console.Write("Email: ");
+            Console.WriteLine("Email: ");
             string email = Console.ReadLine()?.Trim();
 
-            Console.Write("Password: ");
+            Console.WriteLine("Password: ");
             string password = Console.ReadLine(); // Could be improved to hide input
 
             var user = UserService.Authenticate(email, password);
