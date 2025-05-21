@@ -1,0 +1,14 @@
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/bin/Debug/net8.0/ArribaEats
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/bin/Debug/net8.0/ArribaEats.deps.json
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/bin/Debug/net8.0/ArribaEats.runtimeconfig.json
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/bin/Debug/net8.0/ArribaEats.dll
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/bin/Debug/net8.0/ArribaEats.pdb
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.GeneratedMSBuildEditorConfig.editorconfig
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.AssemblyInfoInputs.cache
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.AssemblyInfo.cs
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.csproj.CoreCompileInputs.cache
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.dll
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/refint/ArribaEats.dll
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.pdb
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ArribaEats.genruntimeconfig.cache
+/Users/charlie/ProgrammingPrinciples/ArribaEats/ArribaEats/obj/Debug/net8.0/ref/ArribaEats.dll
