@@ -39,5 +39,18 @@ namespace ArribaEats.Repositories
         {
             return _users.Any(u => u.Email == email);
         }
+
+        //Authenticate 
+        
+        /// <summary>
+        /// Authenticates a user by email and password.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <returns>The authenticated user, or null if authentication fails.</returns>
+        public User Authenticate(string email, string password)
+        {
+            return _users.FirstOrDefault(u => u.Email == email && u.Password == password);
+        }
     }
 }
