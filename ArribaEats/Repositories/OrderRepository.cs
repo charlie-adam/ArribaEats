@@ -23,9 +23,23 @@ namespace ArribaEats.Repositories
             return _orders.Where(o => o.Customer == customer).ToList();
         }
 
+        public List<Order> GetOrdersByCustomerEmail(string email)
+        {
+            return _orders.Where(o => o.Customer.Email == email).ToList();
+        }
+
         public List<Order> GetOrdersByDeliverer(Deliverer deliverer)
         {
             return _orders.Where(o => o.Deliverer == deliverer).ToList();
+        }
+
+        public void MarkOrderAsRated(int orderId)
+        {
+            var order = GetOrderById(orderId);
+            if (order != null)
+            {
+                order.IsRated = true;
+            }
         }
     }
 }
