@@ -86,20 +86,23 @@ namespace ArribaEats.Services
         public static bool IsValidRestaurantName(string name) =>
             !string.IsNullOrWhiteSpace(name) && name.Any(c => !char.IsWhiteSpace(c));
 
-        // Item price must be between 0.00 and 999.99 inclusive
         public static bool IsValidItemPrice(string input, out decimal price)
         {
             price = 0m;
-            if (string.IsNullOrWhiteSpace(input)) return false;
 
-            // Remove any currency symbols or whitespace
-            string cleanedInput = input.Trim().TrimStart('$');
+            if (string.IsNullOrWhiteSpace(input))
+                return false;
 
-            if (decimal.TryParse(cleanedInput, out price))
-            {
-                return price >= 0m && price <= 999.99m;
-            }
-            return false;
+            string cleanedInput = input.Trim();
+
+            if (cleanedInput.Contains('$'))
+                return false;
+            if (!Regex.IsMatch(cleanedInput, @"^\d{1,3}(\.\d{1,2})?$"))
+                return false;
+
+            if (!decimal.TryParse(cleanedInput, out price))
+                return false;
+            return price >= 0m && price <= 999.99m;
         }
     }
 }

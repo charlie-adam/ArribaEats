@@ -1,11 +1,13 @@
 using System;
 using ArribaEats.Models;
+using ArribaEats.Repositories;
 using ArribaEats.Services;
 
 namespace ArribaEats.Menus
 {
     public static class RegisterMenu
     {
+        private static RestaurantRepository _restaurantRepo = RestaurantRepository.Instance;
         public static void Run()
         {
             while (true)
@@ -231,10 +233,10 @@ namespace ArribaEats.Menus
                     break;
                 Console.WriteLine("Invalid location.");
             }
-            
-            var restaraunt = new Restaurant(restaurantName, style, location.x, location.y);
 
-            var client = new Client(name, age, email, phone, password, new Restaurant(restaurantName, style, location.x, location.y));
+            var restaurant = new Restaurant(restaurantName, style, location.x, location.y, email);
+            var client = new Client(name, age, email, phone, password, restaurant);
+            _restaurantRepo.AddRestaurant(restaurant);
             UserService.AddUser(client);
 
             Console.WriteLine($"You have been successfully registered as a client, {name}!");

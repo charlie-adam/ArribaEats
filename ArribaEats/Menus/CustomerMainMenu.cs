@@ -9,7 +9,7 @@ namespace ArribaEats.Menus
 {
     public static class CustomerMainMenu
     {
-        private static readonly RestaurantRepository _restaurantRepo = new RestaurantRepository();
+        private static RestaurantRepository _restaurantRepo = RestaurantRepository.Instance;
         private static readonly OrderRepository _orderRepo = new OrderRepository();
 
         public static void Show(Customer customer)
