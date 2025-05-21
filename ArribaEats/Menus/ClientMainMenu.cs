@@ -1,5 +1,6 @@
 using System;
 using ArribaEats.Models;
+using ArribaEats.Helpers;
 
 namespace ArribaEats.Menus
 {
@@ -9,26 +10,29 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.WriteLine($"\nWelcome, {client.Name} (Client)");
-                Console.WriteLine("1: Upload New Menu Items");
-                Console.WriteLine("2: View Orders");
-                Console.WriteLine("3: Logout");
-                Console.Write("Enter your choice: ");
+                Console.WriteLine("Please make a choice from the menu below:");
+                Console.WriteLine("1: Display your user information");
+                Console.WriteLine("2: Add item to restaurant menu");
+                Console.WriteLine("3: See current orders");
+                Console.WriteLine("4: Start cooking order");
+                Console.WriteLine("5: Finish cooking order");
+                Console.WriteLine("6: Handle deliverers who have arrived");
+                Console.WriteLine("7: Log out");
+                Console.WriteLine("Please enter a choice between 1 and 7: ");
                 var choice = Console.ReadLine();
 
                 switch (choice)
                 {
                     case "1":
-                        Console.WriteLine("Feature not implemented yet: Upload New Menu Items.");
+                        UserInformationDisplay.DisplayClientInfo(client);
                         break;
-                    case "2":
-                        Console.WriteLine("Feature not implemented yet: View Orders.");
-                        break;
-                    case "3":
-                        Console.WriteLine("Logging out...");
+
+                    case "7":
+                        Console.WriteLine("You are now logged out.");
                         return;
+
                     default:
-                        Console.WriteLine("Invalid choice.");
+                        Console.WriteLine("Feature not implemented yet.");
                         break;
                 }
             }

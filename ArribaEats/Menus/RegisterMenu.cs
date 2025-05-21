@@ -161,7 +161,7 @@ namespace ArribaEats.Menus
             string licencePlate;
             while (true)
             {
-                Console.WriteLine("Please enter your licence plate (1-8 uppercase letters, numbers, spaces): ");
+                Console.WriteLine("Please enter your licence plate: ");
                 licencePlate = Console.ReadLine();
                 if (ValidationService.IsValidLicencePlate(licencePlate))
                     break;
@@ -231,8 +231,10 @@ namespace ArribaEats.Menus
                     break;
                 Console.WriteLine("Invalid location.");
             }
+            
+            var restaraunt = new Restaurant(restaurantName, style, location.x, location.y);
 
-            var client = new Client(name, age, email, phone, password, restaurantName, style, location);
+            var client = new Client(name, age, email, phone, password, new Restaurant(restaurantName, style, location.x, location.y));
             UserService.AddUser(client);
 
             Console.WriteLine($"You have been successfully registered as a client, {name}!");

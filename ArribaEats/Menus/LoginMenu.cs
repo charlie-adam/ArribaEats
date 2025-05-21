@@ -49,31 +49,32 @@ namespace ArribaEats.Menus
             string email = Console.ReadLine()?.Trim();
 
             Console.WriteLine("Password: ");
-            string password = Console.ReadLine(); // Could be improved to hide input
+            string password = Console.ReadLine();
 
-            var user = UserService.Authenticate(email, password);
-
-            if (user != null)
+            try
             {
+                var user = UserService.Authenticate(email, password);
                 Console.WriteLine($"Welcome back, {user.Name}!");
+
                 switch (user.Role)
                 {
                     case "Customer":
-                        // CustomerMainMenu.Show((Customer)user);
+                        CustomerMainMenu.Show((Customer)user);
                         break;
                     case "Deliverer":
-                        // DelivererMainMenu.Show((Deliverer)user);
+                        DelivererMainMenu.Show((Deliverer)user);
                         break;
                     case "Client":
-                        // ClientMainMenu.Show((Client)user);
+                        ClientMainMenu.Show((Client)user);
                         break;
                     default:
                         Console.WriteLine("Unknown user role.");
                         break;
                 }
+
                 return true;
             }
-            else
+            catch (UnauthorizedAccessException)
             {
                 Console.WriteLine("Invalid email or password.");
                 return false;

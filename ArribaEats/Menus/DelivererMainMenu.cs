@@ -1,5 +1,6 @@
 using System;
 using ArribaEats.Models;
+using ArribaEats.Helpers;
 
 namespace ArribaEats.Menus
 {
@@ -9,26 +10,27 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.WriteLine($"\nWelcome, {deliverer.Name} (Deliverer)");
-                Console.WriteLine("1: View Assigned Deliveries");
-                Console.WriteLine("2: Update Delivery Status");
-                Console.WriteLine("3: Logout");
-                Console.Write("Enter your choice: ");
+                Console.WriteLine("Please make a choice from the menu below:");
+                Console.WriteLine("1: Display your user information");
+                Console.WriteLine("2: List orders available to deliver");
+                Console.WriteLine("3: Arrived at restaurant to pick up order");
+                Console.WriteLine("4: Mark this delivery as complete");
+                Console.WriteLine("5: Log out");
+                Console.WriteLine("Please enter a choice between 1 and 5: ");
                 var choice = Console.ReadLine();
 
                 switch (choice)
                 {
                     case "1":
-                        Console.WriteLine("Feature not implemented yet: View Assigned Deliveries.");
+                        UserInformationDisplay.DisplayDelivererInfo(deliverer);
                         break;
-                    case "2":
-                        Console.WriteLine("Feature not implemented yet: Update Delivery Status.");
-                        break;
-                    case "3":
-                        Console.WriteLine("Logging out...");
+
+                    case "5":
+                        Console.WriteLine("You are now logged out.");
                         return;
+
                     default:
-                        Console.WriteLine("Invalid choice.");
+                        Console.WriteLine("Feature not implemented yet.");
                         break;
                 }
             }
