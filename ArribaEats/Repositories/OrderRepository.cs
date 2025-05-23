@@ -4,9 +4,22 @@ using ArribaEats.Models;
 
 namespace ArribaEats.Repositories
 {
-    public class OrderRepository
+    public sealed class OrderRepository
     {
+        private static readonly OrderRepository _instance = new OrderRepository();
+        public static OrderRepository Instance => _instance;
+
         private readonly List<Order> _orders = new();
+        private int _nextOrderId = 1;
+
+        // Private constructor to prevent external instantiation
+        private OrderRepository() { }
+
+        // Generate a unique order ID
+        public int GetNextOrderId()
+        {
+            return _nextOrderId++;
+        }
 
         public void AddOrder(Order order)
         {

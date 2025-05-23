@@ -52,7 +52,7 @@ public static class ClientMainMenu
         }
 
         Console.WriteLine("This is your restaurant's current menu:");
-        foreach (var item in restaurant.MenuItems)
+        foreach (var item in restaurant.Menu)
         {
             Console.WriteLine($"  ${item.Price:F2}  {item.Name}");
         }
@@ -80,7 +80,7 @@ public static class ClientMainMenu
                 attempts++;
             }
 
-            restaurant.MenuItems.Add(new MenuItem(itemName, price));
+            restaurant.Menu.Add(new MenuItem(itemName, price));
             Console.WriteLine($"Successfully added {itemName} (${price:F2}) to menu.");
             return;
         }

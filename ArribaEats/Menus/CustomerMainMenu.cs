@@ -10,7 +10,7 @@ namespace ArribaEats.Menus
     public static class CustomerMainMenu
     {
         private static RestaurantRepository _restaurantRepo = RestaurantRepository.Instance;
-        private static readonly OrderRepository _orderRepo = new OrderRepository();
+        private static readonly OrderRepository _orderRepo = OrderRepository.Instance;
 
         public static void Show(Customer customer)
         {
@@ -62,7 +62,7 @@ namespace ArribaEats.Menus
             Console.WriteLine("3: Sorted by style");
             Console.WriteLine("4: Sorted by average rating");
             Console.WriteLine("5: Return to the previous menu");
-            Console.WriteLine("Please enter a choice between 1 and 5:");
+            Console.WriteLine("Please enter a choice between 1 and 5: ");
             var choice = Console.ReadLine();
 
             List<Restaurant> restaurants = _restaurantRepo.GetAll();
@@ -72,7 +72,7 @@ namespace ArribaEats.Menus
                 "1" => restaurants.OrderBy(r => r.Name),
                 "2" => restaurants.OrderBy(r => GetDistance(customer.Location.X, customer.Location.Y, r.LocationX, r.LocationY)),
                 "3" => restaurants.OrderBy(r => r.Style),
-                "4" => restaurants.OrderByDescending(r => r.AverageRating), // Assuming AverageRating property
+                "4" => restaurants.OrderByDescending(r => r.AverageRating),
                 "5" => null,
                 _ => null
             };
@@ -80,18 +80,144 @@ namespace ArribaEats.Menus
             if (sortedRestaurants == null)
                 return;
 
-            Console.WriteLine("Restaurants:");
+            Console.WriteLine("You can order from the following restaurants:");
+            Console.WriteLine("   Restaurant Name       Loc    Dist  Style       Rating");
             int i = 1;
             foreach (var r in sortedRestaurants)
             {
-                Console.WriteLine($"{i++}: {r.Name} ({r.Style}) - Location: {r.LocationX},{r.LocationY}");
+                double distance = GetDistance(customer.Location.X, customer.Location.Y, r.LocationX, r.LocationY);
+                string ratingDisplay = r.AverageRating > 0 ? r.AverageRating.ToString("0.0") : "-";
+                Console.WriteLine($"{i}: {r.Name,-20} {r.LocationX},{r.LocationY}  {distance,4:0}   {r.Style,-10} {ratingDisplay}");
+                i++;
             }
-            // Additional ordering logic, such as choosing a restaurant to order from, can be added here.
+            Console.WriteLine($"{i}: Return to the previous menu");
+            Console.WriteLine($"Please enter a choice between 1 and {i}: ");
+            var selectionInput = Console.ReadLine();
+
+            if (!int.TryParse(selectionInput, out int selection) || selection < 1 || selection > i)
+            {
+                Console.WriteLine("Invalid selection.");
+                return;
+            }
+
+            if (selection == i)
+            {
+                // Return to previous menu
+                return;
+            }
+
+            var selectedRestaurant = sortedRestaurants.ElementAt(selection - 1);
+            HandleRestaurantSelection(customer, selectedRestaurant);
+        }
+
+        private static void HandleRestaurantSelection(Customer customer, Restaurant restaurant)
+        {
+            var first = false;
+            while (true)
+            {
+                if (!first)
+                {
+                    Console.WriteLine($"Placing order from {restaurant.Name}.");
+                    first = true;
+                }
+                Console.WriteLine("1: See this restaurant's menu and place an order");
+                Console.WriteLine("2: See reviews for this restaurant");
+                Console.WriteLine("3: Return to main menu");
+                Console.WriteLine("Please enter a choice between 1 and 3: ");
+                var choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        PlaceOrder(customer, restaurant);
+                        break;
+                    case "2":
+                        // Assuming there's a method to display reviews
+                        Console.WriteLine("Feature not implemented yet.");
+                        break;
+                    case "3":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice, please try again.");
+                        break;
+                }
+            }
+        }
+
+        private static void PlaceOrder(Customer customer, Restaurant restaurant)
+        {
+            var orderItems = new Dictionary<MenuItem, int>();
+            while (true)
+            {
+                Console.WriteLine("Current order total: $" + orderItems.Sum(item => item.Key.Price * item.Value).ToString("0.00"));
+                int index = 1;
+                foreach (var item in restaurant.Menu)
+                {
+                    Console.WriteLine($"{index}:   ${item.Price:0.00}  {item.Name}");
+                    index++;
+                }
+                Console.WriteLine($"{index}: Complete order");
+                Console.WriteLine($"{index + 1}: Cancel order");
+                Console.WriteLine($"Please enter a choice between 1 and {index + 1}: ");
+                var input = Console.ReadLine();
+
+                if (!int.TryParse(input, out int selection) || selection < 1 || selection > index + 1)
+                {
+                    Console.WriteLine("Invalid selection.");
+                    continue;
+                }
+
+                if (selection == index)
+                {
+                    if (orderItems.Count == 0)
+                    {
+                        Console.WriteLine("You must add at least one item to your order.");
+                        continue;
+                    }
+                    // Complete order
+                    var newOrder = new Order(_orderRepo.GetNextOrderId(), restaurant, customer)
+                    {
+                        OrderItems = orderItems
+                    };
+                    _orderRepo.AddOrder(newOrder);
+                    Console.WriteLine($"Your order has been placed. Your order number is #{newOrder.OrderId}.");
+                    return;
+                }
+                else if (selection == index + 1)
+                {
+                    return;
+                }
+                else
+                {
+                    var selectedItem = restaurant.Menu[selection - 1];
+                    Console.WriteLine($"Adding {selectedItem.Name} to order.");
+                    Console.WriteLine("Please enter quantity (0 to cancel): ");
+                    var quantityInput = Console.ReadLine();
+                    if (!int.TryParse(quantityInput, out int quantity) || quantity < 0)
+                    {
+                        Console.WriteLine("Invalid quantity.");
+                        continue;
+                    }
+                    if (quantity == 0)
+                    {
+                        continue;
+                    }
+                    if (orderItems.ContainsKey(selectedItem))
+                    {
+                        orderItems[selectedItem] += quantity;
+                    }
+                    else
+                    {
+                        orderItems[selectedItem] = quantity;
+                    }
+                    Console.WriteLine($"Added {quantity} x {selectedItem.Name} to order.");
+                }
+            }
         }
 
         private static double GetDistance(double x1, double y1, double x2, double y2)
         {
-            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
+            return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
         }
 
         private static void ShowOrderStatus(Customer customer)
@@ -117,27 +243,12 @@ namespace ArribaEats.Menus
                 .ToList();
 
             Console.WriteLine("Select a previous order to rate the restaurant it came from:");
-            Console.WriteLine("1: Return to the previous menu");
-
-            if (orders.Count == 0)
-            {
-                Console.WriteLine("Please enter a choice between 1 and 1:");
-                var input = Console.ReadLine();
-                if (input == "1")
-                    return;
-                else
-                {
-                    Console.WriteLine("Invalid selection.");
-                    return;
-                }
-            }
-
             for (int i = 0; i < orders.Count; i++)
             {
-                Console.WriteLine($"{i + 2}: Order #{orders[i].OrderId} from {orders[i].Restaurant.Name}");
+                Console.WriteLine($"{i + 1}: Order #{orders[i].OrderId} from {orders[i].Restaurant.Name}");
             }
-
-            Console.WriteLine($"Please enter a choice between 1 and {orders.Count + 1}:");
+            Console.WriteLine($"{orders.Count + 1}: Return to the previous menu");
+            Console.WriteLine($"Please enter a choice between 1 and {orders.Count + 1}: ");
             var choiceInput = Console.ReadLine();
 
             if (!int.TryParse(choiceInput, out int selection) || selection < 1 || selection > orders.Count + 1)
@@ -146,16 +257,15 @@ namespace ArribaEats.Menus
                 return;
             }
 
-            if (selection == 1)
+            if (selection == orders.Count + 1)
             {
                 // Return to previous menu
                 return;
             }
 
-            // Adjust selection index to zero-based orders list index
-            var orderToRate = orders[selection - 2];
+            var orderToRate = orders[selection - 1];
 
-            Console.WriteLine("Please enter your rating (1 to 5):");
+            Console.WriteLine("Please enter your rating (1 to 5): ");
             var ratingInput = Console.ReadLine();
 
             if (int.TryParse(ratingInput, out int rating) && rating >= 1 && rating <= 5)
