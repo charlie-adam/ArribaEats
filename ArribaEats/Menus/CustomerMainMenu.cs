@@ -7,13 +7,21 @@ using ArribaEats.Repositories;
 
 namespace ArribaEats.Menus
 {
+    /// <summary>
+    /// Provides the main menu interface for customer users.
+    /// </summary>
     public static class CustomerMainMenu
     {
         private static RestaurantRepository _restaurantRepo = RestaurantRepository.Instance;
         private static readonly OrderRepository _orderRepo = OrderRepository.Instance;
 
+        /// <summary>
+        /// Displays the main menu for the customer user.
+        /// </summary>
+        /// <param name="customer">The customer user.</param>
         public static void Show(Customer customer)
         {
+            // Main menu loop for customer
             while (true)
             {
                 Console.WriteLine("Please make a choice from the menu below:");
@@ -54,6 +62,10 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Shows the list of restaurants to the customer, sorted by the selected criteria.
+        /// </summary>
+        /// <param name="customer">The customer user.</param>
         private static void ShowRestaurantList(Customer customer)
         {
             Console.WriteLine("How would you like the list of restaurants ordered?");
@@ -125,6 +137,11 @@ namespace ArribaEats.Menus
             HandleRestaurantSelection(customer, selectedRestaurant);
         }
 
+        /// <summary>
+        /// Handles the selection of a restaurant by the customer.
+        /// </summary>
+        /// <param name="customer">The customer user.</param>
+        /// <param name="restaurant">The selected restaurant.</param>
         private static void HandleRestaurantSelection(Customer customer, Restaurant restaurant)
         {
             var first = false;
@@ -172,6 +189,11 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Allows the customer to place an order at a restaurant.
+        /// </summary>
+        /// <param name="customer">The customer user.</param>
+        /// <param name="restaurant">The restaurant to order from.</param>
         private static void PlaceOrder(Customer customer, Restaurant restaurant)
         {
             var orderItems = new Dictionary<MenuItem, int>();
@@ -243,11 +265,23 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Calculates the taxicab distance between two points.
+        /// </summary>
+        /// <param name="x1">X coordinate of first point.</param>
+        /// <param name="y1">Y coordinate of first point.</param>
+        /// <param name="x2">X coordinate of second point.</param>
+        /// <param name="y2">Y coordinate of second point.</param>
+        /// <returns>The taxicab distance.</returns>
         private static double GetDistance(double x1, double y1, double x2, double y2)
         {
             return Math.Abs(x1 - x2) + Math.Abs(y1 - y2);
         }
 
+        /// <summary>
+        /// Shows the status of all orders placed by the customer.
+        /// </summary>
+        /// <param name="customer">The customer user.</param>
         private static void ShowOrderStatus(Customer customer)
         {
             var orders = _orderRepo.GetOrdersByCustomerEmail(customer.Email);
@@ -265,6 +299,10 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prints delivery information for an order.
+        /// </summary>
+        /// <param name="order">The order to print delivery info for.</param>
         private static void printDeliveryInfo(Order order)
         {
             if (order.Status == Order.OrderStatus.Delivered)
@@ -273,6 +311,10 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prints the item totals for an order.
+        /// </summary>
+        /// <param name="order">The order to print items for.</param>
         private static void printItemTotals(Order order)
         {
             var itemTotals = new Dictionary<string, int>();
@@ -293,6 +335,10 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Allows the customer to rate a restaurant from a previous order.
+        /// </summary>
+        /// <param name="customer">The customer user.</param>
         private static void RateRestaurant(Customer customer)
         {
             var orders = _orderRepo.GetOrdersByCustomerEmail(customer.Email)

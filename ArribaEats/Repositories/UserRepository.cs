@@ -17,6 +17,7 @@ namespace ArribaEats.Repositories
         /// <param name="user">The user to add.</param>
         public void AddUser(User user)
         {
+            // Add user to the list
             _users.Add(user);
         }
 
@@ -27,6 +28,7 @@ namespace ArribaEats.Repositories
         /// <returns>The user with the specified email, or null if not found.</returns>
         public User GetUserByEmail(string email)
         {
+            // Find user by email
             return _users.FirstOrDefault(u => u.Email == email);
         }
 
@@ -37,11 +39,10 @@ namespace ArribaEats.Repositories
         /// <returns>True if the email is already registered; otherwise, false.</returns>
         public bool IsEmailRegistered(string email)
         {
+            // Check if any user has the given email
             return _users.Any(u => u.Email == email);
         }
 
-        //Authenticate 
-        
         /// <summary>
         /// Authenticates a user by email and password.
         /// </summary>
@@ -50,6 +51,7 @@ namespace ArribaEats.Repositories
         /// <returns>The authenticated user, or null if authentication fails.</returns>
         public User Authenticate(string email, string password)
         {
+            // Find user by email and password
             return _users.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
     }

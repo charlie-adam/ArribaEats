@@ -7,12 +7,20 @@ using ArribaEats.Repositories;
 
 namespace ArribaEats.Menus
 {
+    /// <summary>
+    /// Provides the main menu interface for deliverer users.
+    /// </summary>
     public static class DelivererMainMenu
     {
+        /// <summary>
+        /// Displays the main menu for the deliverer user.
+        /// </summary>
+        /// <param name="deliverer">The deliverer user.</param>
         public static void Show(Deliverer deliverer)
         {
             var orderRepo = OrderRepository.Instance;
 
+            // Main menu loop for deliverer
             while (true)
             {
                 Console.WriteLine("Please make a choice from the menu below:");
@@ -134,8 +142,13 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prompts the deliverer to enter their location and parses it.
+        /// </summary>
+        /// <returns>The parsed location as (x, y), or null if invalid.</returns>
         private static (int x, int y)? GetLocationFromInput()
         {
+            // Loop to get valid location input from deliverer
             while (true)
             {
                 Console.WriteLine("Please enter your location (in the form of X,Y): ");
@@ -153,8 +166,17 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Calculates the taxicab distance between two points.
+        /// </summary>
+        /// <param name="x1">X coordinate of first point.</param>
+        /// <param name="y1">Y coordinate of first point.</param>
+        /// <param name="x2">X coordinate of second point.</param>
+        /// <param name="y2">Y coordinate of second point.</param>
+        /// <returns>The taxicab distance.</returns>
         private static int GetDistance(int x1, int y1, int x2, int y2)
         {
+            // Calculate taxicab distance
             return Math.Abs(x1 - x2) + Math.Abs(y1 - y2); // Taxicab distance
         }
     }

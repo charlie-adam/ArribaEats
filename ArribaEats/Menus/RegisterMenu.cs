@@ -5,11 +5,19 @@ using ArribaEats.Services;
 
 namespace ArribaEats.Menus
 {
+    /// <summary>
+    /// Provides the registration menu for new users.
+    /// </summary>
     public static class RegisterMenu
     {
         private static RestaurantRepository _restaurantRepo = RestaurantRepository.Instance;
+
+        /// <summary>
+        /// Runs the registration menu, allowing the user to select a user type to register as.
+        /// </summary>
         public static void Run()
         {
+            // Main menu loop for registration
             while (true)
             {
                 Console.WriteLine("Which type of user would you like to register as?");
@@ -41,8 +49,13 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prompts the user for a valid name.
+        /// </summary>
+        /// <returns>The validated name.</returns>
         private static string PromptValidName()
         {
+            // Prompt for a valid name
             while (true)
             {
                 Console.WriteLine("Please enter your name: ");
@@ -53,8 +66,13 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prompts the user for a valid age.
+        /// </summary>
+        /// <returns>The validated age.</returns>
         private static int PromptValidAge()
         {
+            // Prompt for a valid age
             while (true)
             {
                 Console.WriteLine("Please enter your age (18-100): ");
@@ -65,8 +83,13 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prompts the user for a valid email address.
+        /// </summary>
+        /// <returns>The validated email address.</returns>
         private static string PromptValidEmail()
         {
+            // Prompt for a valid email address
             while (true)
             {
                 Console.WriteLine("Please enter your email address: ");
@@ -86,8 +109,13 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prompts the user for a valid phone number.
+        /// </summary>
+        /// <returns>The validated phone number.</returns>
         private static string PromptValidPhone()
         {
+            // Prompt for a valid phone number
             while (true)
             {
                 Console.WriteLine("Please enter your mobile phone number: ");
@@ -98,8 +126,13 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Prompts the user for a valid password and confirmation.
+        /// </summary>
+        /// <returns>The validated password.</returns>
         private static string PromptValidPassword()
         {
+            // Prompt for a valid password and confirmation
             while (true)
             {
                 Console.WriteLine("Your password must:");
@@ -128,8 +161,12 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Handles the registration process for a customer.
+        /// </summary>
         private static void RegisterCustomer()
         {
+            // Register a new customer
             string name = PromptValidName();
             int age = PromptValidAge();
             string email = PromptValidEmail();
@@ -152,8 +189,12 @@ namespace ArribaEats.Menus
             Console.WriteLine($"You have been successfully registered as a customer, {name}!");
         }
 
+        /// <summary>
+        /// Handles the registration process for a deliverer.
+        /// </summary>
         private static void RegisterDeliverer()
         {
+            // Register a new deliverer
             string name = PromptValidName();
             int age = PromptValidAge();
             string email = PromptValidEmail();
@@ -176,8 +217,12 @@ namespace ArribaEats.Menus
             Console.WriteLine($"You have been successfully registered as a deliverer, {name}!");
         }
 
+        /// <summary>
+        /// Handles the registration process for a client (restaurant owner).
+        /// </summary>
         private static void RegisterClient()
         {
+            // Register a new client (restaurant owner)
             string name = PromptValidName();
             int age = PromptValidAge();
             string email = PromptValidEmail();

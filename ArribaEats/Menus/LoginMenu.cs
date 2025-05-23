@@ -4,10 +4,17 @@ using ArribaEats.Models;
 
 namespace ArribaEats.Menus
 {
+    /// <summary>
+    /// Provides the login and registration menu for users.
+    /// </summary>
     public static class LoginMenu
     {
+        /// <summary>
+        /// Displays the login menu and handles user input for login, registration, or exit.
+        /// </summary>
         public static void Show()
         {
+            // Main menu loop for login/registration
             while (true)
             {
                 Console.WriteLine("Please make a choice from the menu below:");
@@ -43,6 +50,10 @@ namespace ArribaEats.Menus
             }
         }
 
+        /// <summary>
+        /// Handles the login process for a user.
+        /// </summary>
+        /// <returns>True if login is successful, otherwise false.</returns>
         private static bool Login()
         {
             Console.WriteLine("Email: ");

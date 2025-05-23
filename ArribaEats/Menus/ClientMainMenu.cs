@@ -6,13 +6,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+/// <summary>
+/// Provides the main menu interface for client users (restaurant owners).
+/// </summary>
 public static class ClientMainMenu
 {
     private static RestaurantRepository _restaurantRepo = RestaurantRepository.Instance;
     private static OrderRepository _orderRepo = OrderRepository.Instance;
 
+    /// <summary>
+    /// Displays the main menu for the client user.
+    /// </summary>
+    /// <param name="client">The client user.</param>
     public static void Show(Client client)
     {
+        // Main menu loop for client
         while (true)
         {
             Console.WriteLine("Please make a choice from the menu below:");
@@ -56,6 +64,10 @@ public static class ClientMainMenu
         }
     }
 
+    /// <summary>
+    /// Adds a menu item to the client's restaurant.
+    /// </summary>
+    /// <param name="client">The client user.</param>
     private static void AddMenuItem(Client client)
     {
         var restaurant = _restaurantRepo.GetByOwnerEmail(client.Email);
@@ -100,6 +112,10 @@ public static class ClientMainMenu
         }
     }
 
+    /// <summary>
+    /// Shows current orders for the client's restaurant.
+    /// </summary>
+    /// <param name="client">The client user.</param>
     private static void ShowCurrentOrders(Client client)
     {
         var restaurant = _restaurantRepo.GetByOwnerEmail(client.Email);
@@ -126,6 +142,10 @@ public static class ClientMainMenu
         }
     }
 
+    /// <summary>
+    /// Starts cooking an order for the client's restaurant.
+    /// </summary>
+    /// <param name="client">The client user.</param>
     private static void StartCookingOrder(Client client)
     {
         var restaurant = _restaurantRepo.GetByOwnerEmail(client.Email);
@@ -162,6 +182,10 @@ public static class ClientMainMenu
         PrintItemTotals(selectedOrder);
     }
 
+    /// <summary>
+    /// Marks an order as finished cooking for the client's restaurant.
+    /// </summary>
+    /// <param name="client">The client user.</param>
     private static void FinishCookingOrder(Client client)
     {
         var restaurant = _restaurantRepo.GetByOwnerEmail(client.Email);
@@ -210,6 +234,10 @@ public static class ClientMainMenu
         }
     }
 
+    /// <summary>
+    /// Handles deliverers who have arrived at the restaurant.
+    /// </summary>
+    /// <param name="client">The client user.</param>
     private static void HandleDeliverers(Client client)
     {
         var restaurant = _restaurantRepo.GetByOwnerEmail(client.Email);
@@ -240,6 +268,10 @@ public static class ClientMainMenu
         Console.WriteLine($"Order #{selectedOrder.OrderId} is now marked as being delivered.");
     }
 
+    /// <summary>
+    /// Prints the item totals for an order.
+    /// </summary>
+    /// <param name="order">The order to print items for.</param>
     private static void PrintItemTotals(Order order)
     {
         var itemTotals = new Dictionary<string, int>();
