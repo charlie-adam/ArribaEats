@@ -217,13 +217,6 @@ public static class ClientMainMenu
                                .Where(o => o.Deliverer?.HasArrived == true && o.Status != Order.OrderStatus.BeingDelivered)
                                .ToList();
 
-        if (orders.Count == 0)
-        {
-            Console.WriteLine("No deliverers are currently waiting to collect orders.");
-            return;
-        }
-
-
         Console.WriteLine("These deliverers have arrived and are waiting to collect orders.");
         Console.WriteLine("Select an order to indicate that the deliverer has collected it:");
         for (int i = 0; i < orders.Count; i++)

@@ -40,12 +40,12 @@ public class RestaurantRepository
         return _restaurants;
     }
     
-    public void AddRating(string restaurantName, int rating)
+    public void AddRating(string restaurantName, int rating, string comment, string customerName)
     {
         var restaurant = GetByName(restaurantName);
         if (restaurant != null)
         {
-            restaurant.AddRating(rating);
+            restaurant.AddRating(rating, comment, customerName);
         }
     }
 }

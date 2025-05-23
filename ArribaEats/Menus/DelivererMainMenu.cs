@@ -98,6 +98,10 @@ namespace ArribaEats.Menus
 
                         Console.WriteLine($"Thanks. We have informed {deliverer.CurrentDelivery.Restaurant.Name} that you have arrived and are ready to pick up order #{deliverer.CurrentDelivery.OrderId}.");
                         Console.WriteLine("Please show the staff this screen as confirmation.");
+                        if (deliverer.CurrentDelivery.Status == Order.OrderStatus.Ordered || deliverer.CurrentDelivery.Status == Order.OrderStatus.Cooking)
+                        {
+                            Console.WriteLine("The order is still being prepared, so please wait patiently until it is ready.");
+                        }
                         Console.WriteLine($"When you have the order, please deliver it to {deliverer.CurrentDelivery.Customer.Name} at {deliverer.CurrentDelivery.Customer.Location.X},{deliverer.CurrentDelivery.Customer.Location.Y}.");
                         break;
 

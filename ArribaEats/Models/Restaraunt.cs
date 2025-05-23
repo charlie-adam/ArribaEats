@@ -8,18 +8,26 @@ namespace ArribaEats.Models
         public int LocationX { get; set; }
         public int LocationY { get; set; }
         public string OwnerEmail { get; set; }
-        private readonly List<int> _ratings = new();
         public string Style { get; set; }
         public List<MenuItem> Menu { get; set; } = new List<MenuItem>();
-        public List<int> Ratings { get; set; } = new List<int>();
 
-        public double AverageRating => Ratings.Count == 0 ? 0 : Ratings.Average();
+        private readonly List<(int Rating, string Comment, string CustomerName)> _reviews = new();
 
-        public void AddMenuItem(string name, decimal price)
+        public void AddRating(int rating, string comment, string customerName)
         {
-            Menu.Add(new MenuItem(name, price));
+            if (rating >= 1 && rating <= 5)
+            {
+                _reviews.Add((rating, comment, customerName));
+            }
         }
-        
+
+        public IEnumerable<(int Rating, string Comment, string CustomerName)> GetReviews()
+        {
+            return _reviews;
+        }
+
+        public double AverageRating => _reviews.Count == 0 ? 0 : _reviews.Average(r => r.Rating);
+
         public Restaurant(string name, string style, int locationX, int locationY, string ownerEmail)
         {
             Name = name;
@@ -28,13 +36,10 @@ namespace ArribaEats.Models
             LocationY = locationY;
             OwnerEmail = ownerEmail;
         }
-        
-        public void AddRating(int rating)
+
+        public void AddMenuItem(string name, decimal price)
         {
-            if (rating >= 1 && rating <= 5)
-            {
-                _ratings.Add(rating);
-            }
+            Menu.Add(new MenuItem(name, price));
         }
     }
 

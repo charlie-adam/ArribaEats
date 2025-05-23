@@ -147,7 +147,21 @@ namespace ArribaEats.Menus
                         PlaceOrder(customer, restaurant);
                         break;
                     case "2":
-                        Console.WriteLine("Feature not implemented yet.");
+                        var reviews = restaurant.GetReviews().ToList();
+                        if (reviews.Count == 0)
+                        {
+                            Console.WriteLine("No reviews have been left for this restaurant.");
+                        }
+                        else
+                        {
+                            foreach (var (rating, comment, customerName) in reviews)
+                            {
+                                Console.WriteLine($"Reviewer: {customerName}");
+                                Console.WriteLine($"Rating: {new string('*', rating)}");
+                                Console.WriteLine($"Comment: {comment}");
+                                Console.WriteLine();
+                            }
+                        }
                         break;
                     case "3":
                         return;
@@ -282,7 +296,7 @@ namespace ArribaEats.Menus
         private static void RateRestaurant(Customer customer)
         {
             var orders = _orderRepo.GetOrdersByCustomerEmail(customer.Email)
-                .Where(o => !o.IsRated)
+                .Where(o => o.Status == Order.OrderStatus.Delivered && !o.IsRated)
                 .ToList();
 
             Console.WriteLine("Select a previous order to rate the restaurant it came from:");
@@ -292,8 +306,8 @@ namespace ArribaEats.Menus
             }
             Console.WriteLine($"{orders.Count + 1}: Return to the previous menu");
             Console.WriteLine($"Please enter a choice between 1 and {orders.Count + 1}: ");
+            
             var choiceInput = Console.ReadLine();
-
             if (!int.TryParse(choiceInput, out int selection) || selection < 1 || selection > orders.Count + 1)
             {
                 Console.WriteLine("Invalid selection.");
@@ -301,26 +315,46 @@ namespace ArribaEats.Menus
             }
 
             if (selection == orders.Count + 1)
-            {
-                // Return to previous menu
                 return;
-            }
 
-            var orderToRate = orders[selection - 1];
+            var selectedOrder = orders[selection - 1];
 
-            Console.WriteLine("Please enter your rating (1 to 5): ");
-            var ratingInput = Console.ReadLine();
+            Console.WriteLine($"You are rating order #{selectedOrder.OrderId} from {selectedOrder.Restaurant.Name}:");
 
-            if (int.TryParse(ratingInput, out int rating) && rating >= 1 && rating <= 5)
+            // Print items in the order
+            var groupedItems = selectedOrder.OrderItems
+                .GroupBy(item => item.Key.Name)
+                .Select(g => new { Name = g.Key, Quantity = g.Sum(x => x.Value) });
+
+            foreach (var item in groupedItems)
             {
-                _restaurantRepo.AddRating(orderToRate.Restaurant.Name, rating);
-                _orderRepo.MarkOrderAsRated(orderToRate.OrderId);
-                Console.WriteLine($"Thank you for rating {orderToRate.Restaurant.Name} with a {rating}!");
+                Console.WriteLine($"{item.Quantity} x {item.Name}");
             }
-            else
+
+            int rating;
+            while (true)
             {
-                Console.WriteLine("Invalid rating input.");
+                Console.WriteLine("Please enter a rating for this restaurant (1-5, 0 to cancel):");
+                var ratingInput = Console.ReadLine();
+                if (!int.TryParse(ratingInput, out rating) || rating < 0 || rating > 5)
+                {
+                    Console.WriteLine("Invalid rating.");
+                    continue;
+                }
+
+                if (rating == 0)
+                    return;
+
+                break;
             }
+
+            Console.WriteLine("Please enter a comment to accompany this rating:");
+            var comment = Console.ReadLine();
+
+            _restaurantRepo.AddRating(selectedOrder.Restaurant.Name, rating, comment, customer.Name);
+            _orderRepo.MarkOrderAsRated(selectedOrder.OrderId);
+
+            Console.WriteLine($"Thank you for rating {selectedOrder.Restaurant.Name}.");
         }
     }
 }
