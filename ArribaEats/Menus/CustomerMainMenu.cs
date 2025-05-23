@@ -70,9 +70,11 @@ namespace ArribaEats.Menus
             IEnumerable<Restaurant> sortedRestaurants = choice switch
             {
                 "1" => restaurants.OrderBy(r => r.Name),
-                "2" => restaurants.OrderBy(r => GetDistance(customer.Location.X, customer.Location.Y, r.LocationX, r.LocationY)),
-                "3" => restaurants.OrderBy(r => r.Style),
-                "4" => restaurants.OrderByDescending(r => r.AverageRating),
+                "2" => restaurants
+                    .OrderBy(r => GetDistance(customer.Location.X, customer.Location.Y, r.LocationX, r.LocationY))
+                    .ThenBy(r => r.Name),
+                "3" => restaurants.OrderByDescending(r => r.Style).ThenBy(r => r.Name),
+                "4" => restaurants.OrderByDescending(r => r.AverageRating).ThenBy(r => r.Name),
                 "5" => null,
                 _ => null
             };
