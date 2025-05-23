@@ -9,15 +9,15 @@
 *.sln.docstates
 
 # Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-build/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
+ArribaEats/[Dd]ebug/
+ArribaEats/[Rr]elease/
+ArribaEats/x64/
+ArribaEats/x86/
+ArribaEats/build/
+ArribaEats/bld/
+ArribaEats/[Bb]in/
+ArribaEats/[Oo]bj/
+ArribaEats/[Ll]og/
 
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/

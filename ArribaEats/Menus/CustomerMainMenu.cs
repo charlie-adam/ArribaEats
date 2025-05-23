@@ -73,10 +73,23 @@ namespace ArribaEats.Menus
                 "2" => restaurants
                     .OrderBy(r => GetDistance(customer.Location.X, customer.Location.Y, r.LocationX, r.LocationY))
                     .ThenBy(r => r.Name),
-                "3" => restaurants.OrderByDescending(r => r.Style).ThenBy(r => r.Name),
+                "3" => restaurants
+                    .OrderBy(r => GetStyleOrder(r.Style))
+                    .ThenBy(r => r.Name),
                 "4" => restaurants.OrderByDescending(r => r.AverageRating).ThenBy(r => r.Name),
                 "5" => null,
                 _ => null
+            };
+            
+            int GetStyleOrder(string style) => style switch
+            {
+                "Italian" => 1,
+                "French" => 2,
+                "Chinese" => 3,
+                "Japanese" => 4,
+                "American" => 5,
+                "Australian" => 6,
+                _ => int.MaxValue
             };
 
             if (sortedRestaurants == null)
@@ -134,7 +147,6 @@ namespace ArribaEats.Menus
                         PlaceOrder(customer, restaurant);
                         break;
                     case "2":
-                        // Assuming there's a method to display reviews
                         Console.WriteLine("Feature not implemented yet.");
                         break;
                     case "3":
@@ -231,10 +243,30 @@ namespace ArribaEats.Menus
                 return;
             }
 
-            Console.WriteLine("Your orders:");
             foreach (var order in orders)
             {
-                Console.WriteLine($"Order #{order.OrderId}: From {order.Restaurant.Name} - Status: {order.Status}");
+                Console.WriteLine($"Order #{order.OrderId} from {order.Restaurant.Name}: {order.Status}");
+                printItemTotals(order);
+            }
+        }
+
+        private static void printItemTotals(Order order)
+        {
+            var itemTotals = new Dictionary<string, int>();
+            foreach (var item in order.OrderItems)
+            {
+                if (itemTotals.ContainsKey(item.Key.Name))
+                {
+                    itemTotals[item.Key.Name] += item.Value;
+                }
+                else
+                {
+                    itemTotals[item.Key.Name] = item.Value;
+                }
+            }
+            foreach (var item in itemTotals)
+            {
+                Console.WriteLine($"{item.Value} x {item.Key}");
             }
         }
 

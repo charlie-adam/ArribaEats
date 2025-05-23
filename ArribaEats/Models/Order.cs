@@ -9,7 +9,7 @@ namespace ArribaEats.Models
         public Customer Customer { get; set; }
         public Deliverer Deliverer { get; set; }
         public bool IsRated { get; set; } = false;
-        public string Status { get; set; } = "Pending";
+        public OrderStatus Status { get; set; } = OrderStatus.Ordered;
         public Dictionary<MenuItem, int> OrderItems { get; set; } = new();
         public Order(int orderId, Restaurant restaurant, Customer customer)
         {
@@ -26,6 +26,15 @@ namespace ArribaEats.Models
                 total += item.Key.Price * item.Value;  // Price from MenuItem, quantity is int value
             }
             return total;
+        }
+
+        //orderStatus enum
+        public enum OrderStatus
+        {
+            Ordered,
+            InProgress,
+            Delivered,
+            Cancelled
         }
     }
 }
