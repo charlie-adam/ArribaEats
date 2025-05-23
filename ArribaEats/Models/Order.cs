@@ -32,9 +32,10 @@ namespace ArribaEats.Models
         public enum OrderStatus
         {
             Ordered,
-            InProgress,
             Delivered,
-            Cancelled
+            Cooking,
+            BeingDelivered,
+            Cooked
         }
     }
 }

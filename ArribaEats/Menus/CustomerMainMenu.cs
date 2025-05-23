@@ -246,7 +246,16 @@ namespace ArribaEats.Menus
             foreach (var order in orders)
             {
                 Console.WriteLine($"Order #{order.OrderId} from {order.Restaurant.Name}: {order.Status}");
+                printDeliveryInfo(order);
                 printItemTotals(order);
+            }
+        }
+
+        private static void printDeliveryInfo(Order order)
+        {
+            if (order.Status == Order.OrderStatus.Delivered)
+            {
+                Console.WriteLine($"This order was delivered by {order.Deliverer.Name} (licence plate: {order.Deliverer.LicencePlate})");
             }
         }
 

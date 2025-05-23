@@ -21,6 +21,27 @@ namespace ArribaEats.Repositories
             return _nextOrderId++;
         }
 
+        public List<Order> GetOrders()
+        {
+            return _orders;
+        }
+
+        public void UpdateOrder(Order updatedOrder)
+        {
+            var index = _orders.FindIndex(o => o.OrderId == updatedOrder.OrderId);
+            if (index != -1)
+            {
+                _orders[index] = updatedOrder;
+            }
+        }
+        
+        public List<Order> GetOrdersByRestaurantName(string restaurantName)
+        {
+            return _orders
+                .Where(o => o.Restaurant.Name == restaurantName)
+                .ToList();
+        }
+
         public void AddOrder(Order order)
         {
             _orders.Add(order);

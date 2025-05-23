@@ -41,8 +41,8 @@ namespace ArribaEats.Menus
                         if (location == null)
                             break;
 
-                        var availableOrders = orderRepo.GetOrdersByDeliverer(null)
-                            .Where(o => o.Status == Order.OrderStatus.Ordered).OrderBy(o => o.OrderId).ToList();
+                        var availableOrders = orderRepo.GetOrders()
+                            .Where(o => (o.Deliverer == null)).OrderBy(o => o.OrderId).ToList();
 
                         if (availableOrders.Count == 0)
                         {
@@ -76,7 +76,7 @@ namespace ArribaEats.Menus
                         var selectedOrder = availableOrders[selected - 1];
                         deliverer.CurrentDelivery = selectedOrder;
                         selectedOrder.Deliverer = deliverer;
-                        selectedOrder.Status = Order.OrderStatus.InProgress;
+                        selectedOrder.Status = Order.OrderStatus.Ordered;
 
                         Console.WriteLine($"Thanks for accepting the order. Please head to {selectedOrder.Restaurant.Name} at {selectedOrder.Restaurant.LocationX},{selectedOrder.Restaurant.LocationY} to pick it up.");
                         break;
@@ -94,16 +94,11 @@ namespace ArribaEats.Menus
                             break;
                         }
 
+                        deliverer.HasArrived = true;
+
                         Console.WriteLine($"Thanks. We have informed {deliverer.CurrentDelivery.Restaurant.Name} that you have arrived and are ready to pick up order #{deliverer.CurrentDelivery.OrderId}.");
                         Console.WriteLine("Please show the staff this screen as confirmation.");
-
-                        if (deliverer.CurrentDelivery.Status == Order.OrderStatus.Ordered)
-                        {
-                            Console.WriteLine("The order is still being prepared, so please wait patiently until it is ready.");
-                        }
-
                         Console.WriteLine($"When you have the order, please deliver it to {deliverer.CurrentDelivery.Customer.Name} at {deliverer.CurrentDelivery.Customer.Location.X},{deliverer.CurrentDelivery.Customer.Location.Y}.");
-                        deliverer.CurrentDelivery.Status = Order.OrderStatus.InProgress;
                         break;
 
                     case "4":
@@ -113,7 +108,7 @@ namespace ArribaEats.Menus
                             break;
                         }
 
-                        if (deliverer.CurrentDelivery.Status != Order.OrderStatus.InProgress)
+                        if (deliverer.CurrentDelivery.Status != Order.OrderStatus.BeingDelivered)
                         {
                             Console.WriteLine("You have not yet picked up this order.");
                             break;
@@ -139,7 +134,7 @@ namespace ArribaEats.Menus
         {
             while (true)
             {
-                Console.Write("Please enter your location (in the form of X,Y): ");
+                Console.WriteLine("Please enter your location (in the form of X,Y): ");
                 var input = Console.ReadLine();
                 var parts = input?.Split(',');
 
